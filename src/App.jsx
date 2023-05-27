@@ -10,7 +10,7 @@ import { useAddress } from "@thirdweb-dev/react";
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null)
   const address = useAddress();
-
+console.log(address);
   return (
     <>
    <MenuBar />
@@ -24,7 +24,7 @@ function App() {
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute isSignedIn={isSignedIn}>
+              <PrivateRoute address={address}>
                 <Dashboard />
               </PrivateRoute>
             }

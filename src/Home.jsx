@@ -1,3 +1,4 @@
+import { NavLink, Navigate } from "react-router-dom";
 
 
 function Home() {
@@ -22,12 +23,12 @@ function Home() {
           افزونه‌های قدرتمند جاوا اسکریپت
         </p>
         <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-          <button
-            type="button"
+          <NavLink to="/dashboard"
+          
             className="btn btn-info px-4 me-md-2 fw-bold"
           >
-            Primary
-          </button>
+            داشبورد
+          </NavLink>
           <button type="button" className="btn btn-outline-secondary  px-4">
             Default
           </button>
