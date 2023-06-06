@@ -1,119 +1,195 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import StudentRegistry from "./assets/StudentRegistry.json";
+import { useContract } from "@thirdweb-dev/react";
 
 function Dashboard() {
-  return (
-    <main className="container">
-
-      <div class="row g-5">
-        <form class="needs-validation was-validated" novalidate="" />
-        <div class="row g-3">
-          <div class="col-sm-6">
-            <label for="firstName" class="form-label">
-              First name
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="firstName"
-              placeholder=""
-              value=""
-              required=""
-            />
-            <div class="invalid-feedback">Valid first name is required.</div>
-          </div>
-
-          <div class="col-sm-6">
-            <label for="lastName" class="form-label">
-              Last name
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="lastName"
-              placeholder=""
-              value=""
-              required=""
-            />
-            <div class="invalid-feedback">Valid last name is required.</div>
-          </div>
-
-          <div class="col-12">
-            <label for="email" class="form-label">
-              Email <span class="text-body-secondary">(Optional)</span>
-            </label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              placeholder="you@example.com"
-            />
-            <div class="invalid-feedback">
-              Please enter a valid email address for shipping updates.
-            </div>
-          </div>
-
-          <div class="col-12">
-            <label for="address" class="form-label">
-              Address
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="address"
-              placeholder="1234 Main St"
-              required=""
-            />
-            <div class="invalid-feedback">
-              Please enter your shipping address.
-            </div>
-          </div>
-
-          <div class="col-md-5">
-            <label for="country" class="form-label">
-              Country
-            </label>
-            <select class="form-select" id="country" required="">
-              <option value="">Choose...</option>
-              <option>United States</option>
-            </select>
-            <div class="invalid-feedback">Please select a valid country.</div>
-          </div>
-
-          <div class="col-md-4">
-            <label for="state" class="form-label">
-              State
-            </label>
-            <select class="form-select" id="state" required="">
-              <option value="">Choose...</option>
-              <option>California</option>
-            </select>
-            <div class="invalid-feedback">Please provide a valid state.</div>
-          </div>
-
-          <div class="col-md-3">
-            <label for="zip" class="form-label">
-              Zip
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="zip"
-              placeholder=""
-              required=""
-            />
-            <div class="invalid-feedback">Zip code required.</div>
-          </div>
-        </div>
-
-        <hr class="my-4" />
-
-
-        <button class="w-100 btn btn-primary btn-lg" type="submit">
-          Continue to checkout
-        </button>
-      </div>
-    </main>
+  const [contract, setContract] = useState(null);
+  console.log(contract);
+  const { data } = useContract(
+    "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    StudentRegistry.abi
   );
+
+  useEffect(() => {
+    if (data) {
+      setContract(data.contractWrapper.writeContract);
+    }
+  }, [data]);
+
+  const handleCreateStudent = async () => {
+    console.log("dsf")
+    await contract.createStudent('hh', 'hhds', 'h', 'h', 47);
+  };
+  const handleReadStudent = async () => {
+    console.log("dsf")
+    const res=await contract.readStudent();
+    console.log(res);
+  };
+  return (
+    <div>
+      <h1>Smart Contract Info:</h1>
+      <button onClick={handleCreateStudent}>Create Student</button>
+      <button onClick={handleReadStudent}>ReadStudent</button>
+      {/* {res} */}
+      {/* display other relevant information from the smart contract response */}
+    </div>
+  );
+
+// import React, { useEffect, useState } from "react";
+// import StudentRegistry from "./assets/StudentRegistry.json";
+// import { useContract } from "@thirdweb-dev/react";
+
+// function Dashboard() {
+//   const [smartContract, setSmartContract] = useState([]);
+//   const [contractWrapper, setContractWrapper] = useState([]);
+//   const { data } = useContract(
+//     "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+//     StudentRegistry.abi
+//   );
+
+//   useEffect(() => {
+//     if (data) {
+//       setSmartContract(data);
+//     }
+//     if (smartContract.contractWrapper) {
+//       setContractWrapper(smartContract.contractWrapper);
+//     }
+//   }, [data, smartContract]);
+
+//   const contarct = contractWrapper.writeContract;
+//   const handlech =()=>{
+//     contarct.createStudent('string','string','string','string',454);
+
+//   }
+//   return (
+//     <div>
+//       <h1>Smart Contract Info:</h1>
+//       <button onClick={()=>handlech()}>dlksjfhklsdfhkl</button>
+//       {/* <p>Contract Address: {smartContract.contractAddress}</p>
+//       <p>ABI: {JSON.stringify(StudentRegistry.abi)}</p> */}
+//       {/* display other relevant information from the smart contract response */}
+//     </div>
+//   );
+
+//   return (
+//     <main className="container">
+//       <div className="col-md-7 col-lg-8 mx-auto">
+//         <div className="row g-5">
+//           <form className="needs-validation was-validated" />
+//           <div className="row g-3">
+//             <div className="col-sm-6">
+//               <label htmlFor="firstName" className="form-label">
+//                 First name
+//               </label>
+//               <input
+//                 type="text"
+//                 className="form-control"
+//                 id="firstName"
+//                 placeholder=""
+//                 required=""
+//               />
+//               <div className="invalid-feedback">
+//                 Valid first name is required.
+//               </div>
+//             </div>
+
+//             <div className="col-sm-6">
+//               <label htmlFor="lastName" className="form-label">
+//                 Last name
+//               </label>
+//               <input
+//                 type="text"
+//                 className="form-control"
+//                 id="lastName"
+//                 placeholder=""
+//                 required=""
+//               />
+//               <div className="invalid-feedback">
+//                 Valid last name is required.
+//               </div>
+//             </div>
+
+//             <div className="col-12">
+//               <label htmlFor="email" className="form-label">
+//                 Email <span className="text-body-secondary">(Optional)</span>
+//               </label>
+//               <input
+//                 type="email"
+//                 className="form-control"
+//                 id="email"
+//                 placeholder="you@example.com"
+//               />
+//               <div className="invalid-feedback">
+//                 Please enter a valid email address htmlFor shipping updates.
+//               </div>
+//             </div>
+
+//             <div className="col-12">
+//               <label htmlFor="address" className="form-label">
+//                 Address
+//               </label>
+//               <input
+//                 type="text"
+//                 className="form-control"
+//                 id="address"
+//                 placeholder="1234 Main St"
+//                 required=""
+//               />
+//               <div className="invalid-feedback">
+//                 Please enter your shipping address.
+//               </div>
+//             </div>
+
+//             <div className="col-md-5">
+//               <label htmlFor="country" className="form-label">
+//                 Country
+//               </label>
+//               <select className="form-select" id="country" required="">
+//                 <option value="">Choose...</option>
+//                 <option>United States</option>
+//               </select>
+//               <div className="invalid-feedback">
+//                 Please select a valid country.
+//               </div>
+//             </div>
+
+//             <div className="col-md-4">
+//               <label htmlFor="state" className="form-label">
+//                 State
+//               </label>
+//               <select className="form-select" id="state" required="">
+//                 <option value="">Choose...</option>
+//                 <option>California</option>
+//               </select>
+//               <div className="invalid-feedback">
+//                 Please provide a valid state.
+//               </div>
+//             </div>
+
+//             <div className="col-md-3">
+//               <label htmlFor="zip" className="form-label">
+//                 Zip
+//               </label>
+//               <input
+//                 type="text"
+//                 className="form-control"
+//                 id="zip"
+//                 placeholder=""
+//                 required=""
+//               />
+//               <div className="invalid-feedback">Zip code required.</div>
+//             </div>
+//           </div>
+
+//           <hr className="my-4" />
+
+//           <button className="w-100 btn btn-primary btn-lg" type="submit">
+//             Continue to checkout
+//           </button>
+//         </div>
+//       </div>
+//     </main>
+//   );
 }
 
 export default Dashboard;

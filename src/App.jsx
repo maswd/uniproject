@@ -1,16 +1,26 @@
 import './App.css'
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import Home from "./Home";
 import Dashboard from "./Dashboard";
 import MenuBar from './MenuBar'
 import { useState } from 'react';
 import { useAddress } from "@thirdweb-dev/react";
+import { useEffect } from 'react';
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null)
   const address = useAddress();
-console.log(address);
+  const location=useLocation()
+  const Nav=useNavigate()
+useEffect(() => {
+  if(address && location.pathname === "/"){
+    Nav("/dashboard",{replace: true})
+  }
+
+ 
+}, [address])
+
   return (
     <>
    <MenuBar />
