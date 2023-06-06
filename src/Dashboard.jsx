@@ -4,7 +4,8 @@ import { useContract } from "@thirdweb-dev/react";
 
 function Dashboard() {
   const [contract, setContract] = useState(null);
-  console.log(contract);
+  const [students, setStudents] = useState(null);
+
   const { data } = useContract(
     "0x5FbDB2315678afecb367f032d93F642f64180aa3",
     StudentRegistry.abi
@@ -17,20 +18,20 @@ function Dashboard() {
   }, [data]);
 
   const handleCreateStudent = async () => {
-    console.log("dsf")
     await contract.createStudent('hh', 'hhds', 'h', 'h', 47);
   };
   const handleReadStudent = async () => {
-    console.log("dsf")
+    console.log(students);
     const res=await contract.readStudent();
-    console.log(res);
+    setStudents(res);
+    console.log(students);
   };
   return (
     <div>
       <h1>Smart Contract Info:</h1>
       <button onClick={handleCreateStudent}>Create Student</button>
       <button onClick={handleReadStudent}>ReadStudent</button>
-      {/* {res} */}
+      {/* {Object.keys(students)} */}
       {/* display other relevant information from the smart contract response */}
     </div>
   );
